@@ -15,43 +15,859 @@ class Ele_Card extends \Elementor\Widget_Base{
     }
 
 	public function get_categories() {
-        return [ 'basic' ];
+        return [ 'ele_pack_category' ];
     }
 
 	public function get_script_depends() {
-        return [ 'main_js','ele_pack' ];
+        return [ 'main_js' ];
     }
 
 	public function get_style_depends() {
-        return [ 'main_css','ele_pack' ];
+        return [ 'main_css' , 'bootstrap_css'];
     }
 
 	protected function _register_controls() {
+
         $this->start_controls_section(
-			'content_section',
+			'ele_pack_card_top_section',
 			[
-				'label' => __( 'Content', 'plugin-name' ),
+				'label' => __( 'Card Top', 'ele_pack' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$this->add_control(
-			'widget_title',
+			'ele_pack_top_enable',
 			[
-				'label' => __( 'Title', 'plugin-domain' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => __( 'Default title', 'plugin-domain' ),
-				'placeholder' => __( 'Type your title here', 'plugin-domain' ),
+				'label' => __( 'Show Card Top', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'top_enable' => __( 'Enable', 'ele_pack' ),
+				'top_disable' => __( 'Disable', 'ele_pack' ),
+				'return_value' => 'top_enable',
+				'default' => 'top_enable',
 			]
 		);
-
+        $this->add_control(
+			'ele_pack_image_icon_enable',
+			[
+				'label' => __( 'Show icon or image', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+                'default' => 'image',
+				'options' => [
+					'image' => [
+						'title' => __( 'Image', 'ele_pack' ),
+						'icon' => 'fas fa-images',
+					],
+					'icon' => [
+						'title' => __( 'Icon', 'ele_pack' ),
+						'icon' => 'fas fa-icons',
+					],
+				],
+                'conditions' => [
+                    'relation' => 'or',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                    ],
+                ],
+                'toggle' => false,
+            ]
+		);
+        $this->add_control(
+            'ele_pack_top_image',
+            [
+                'label' => __( 'Choose Image', 'ele_pack' ),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => \Elementor\Utils::get_placeholder_image_src(),
+                ],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'image',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+                'dynamic' => [
+                    'active' => true
+                ]
+            ]
+        );
+        $this->add_control(
+			'ele_pack_top_icon',
+			[
+				'label' => __( 'Icon', 'text-domain' ),
+				'type' => \Elementor\Controls_Manager::ICONS,
+				'default' => [
+					'value' => 'fas fa-star',
+					'library' => 'solid',
+				],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'icon',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_top_align',
+			[
+				'label' => __( 'Alignment', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __( 'Left', 'ele_pack' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'ele_pack' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __( 'Right', 'ele_pack' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],     
+				'default' => 'center',
+				'toggle' => true,
+                'selectors' => [
+                    '{{WRAPPER}} .card-icon,.card-img' => 'text-align: {{VALUE}};',
+                ],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
 		$this->end_controls_section();
+        $this->start_controls_section(
+			'ele_pack_card_content',
+			[
+				'label' => __( 'Card Content', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_title',
+			[
+				'label' => __( 'Title', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => __( 'Default title', 'ele_pack' ),
+				'placeholder' => __( 'Type your title here', 'ele_pack' ),
+                'dynamic' => [
+                    'active' => true
+                ]
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_description',
+			[
+				'label' => __( 'Description', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'rows' => 5,
+				'default' => __( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500', 'ele_pack' ),
+				'placeholder' => __( 'Type your description here', 'ele_pack' ),
+                'dynamic' => [
+                    'active' => true
+                ]
+			]
+		);
+        $this->end_controls_section();
+        $this->start_controls_section(
+			'ele_pack_card_button',
+			[
+				'label' => __( 'Card Button', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+        $this->add_control(
+			'ele_pack_enable_card_button',
+			[
+				'label' => __( 'Show Button', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'enable_button' => __( 'Enable', 'ele_pack' ),
+				'disable_button' => __( 'Disable', 'ele_pack' ),
+				'return_value' => 'enable_button',
+				'default' => 'enable_button',
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_button_style',
+			[
+				'label' => __( 'Border Style', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'card-text-btn',
+				'options' => [
+					'card-text-btn'  => __( 'Text Button', 'ele_pack' ),
+					'card-btn' => __( 'Button', 'ele_pack' ),
+				],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_button_title',
+			[
+				'label' => __( 'Button Text', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => __( 'Read More', 'ele_pack' ),
+				'placeholder' => __( 'Type your title here', 'ele_pack' ),
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_button_align',
+			[
+				'label' => __( 'Alignment', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __( 'Left', 'ele_pack' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'ele_pack' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __( 'Right', 'ele_pack' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],     
+				'default' => 'center',
+				'toggle' => true,
+                'selectors' => [
+                    '{{WRAPPER}} .button' => 'text-align: {{VALUE}};',
+                ],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_button_link',
+			[
+				'label' => __( 'Link', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => __( 'https://your-link.com', 'ele_pack' ),
+				'show_external' => true,
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+				],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+                'dynamic' => [
+                    'active' => true
+                ]
+			]
+		);
+        $this->end_controls_section();
+        $this->start_controls_section(
+			'ele_pack_card_style',
+			[
+				'label' => __( 'Card Style', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+        $this->start_controls_tabs(
+			'card_style_tabs'
+		);
+        $this->start_controls_tab(
+			'card_style_tab_normal',
+			[
+				'label' => __( 'Normal', 'ele_pack' ),
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_background_color_normal',
+			[
+				'label' => __( 'Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'ele_pack_card_shadow_normal',
+				'label' => __( 'Box Shadow', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card',
+			]
+		);
+        $this->end_controls_tab();
+        $this->start_controls_tab(
+			'card_style_tab_hover',
+			[
+				'label' => __( 'Hover', 'ele_pack' ),
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_Title_color',
+			[
+				'label' => __( 'Title Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .card-heading' => 'color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_des_hover',
+			[
+				'label' => __( 'Description Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .card-text' => 'color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_hover',
+			[
+				'label' => __( 'Icon Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_background_hover',
+			[
+				'label' => __( 'Icon Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_border_hover',
+			[
+				'label' => __( 'Icon Border Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_background_color_hover',
+			[
+				'label' => __( 'Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'ele_pack_card_shadow_hover',
+				'label' => __( 'Box Shadow', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card:hover',
+			]
+		);
+        $this->end_controls_tab();
+        $this->end_controls_tabs();
+        $this->add_control(
+			'ele_pack_card_hr_one',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'ele_pack_card_border',
+				'label' => __( 'Border', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card',
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_border_radius',
+			[
+				'label' => __( 'Border Radius', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_padding',
+			[
+				'label' => __( 'Padding', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+        $this->end_controls_section();
+        $this->start_controls_section(
+			'ele_pack_card_top_image_style',
+			[
+				'label' => __( 'Card Top Image', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'image',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_top_image_width',
+			[
+				'label' => __( 'Width', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+						'step' => 1,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .avatar-image' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_top_image_height',
+			[
+				'label' => __( 'Height', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .avatar-image' => 'height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_image_object_fit',
+			[
+				'label' => __( 'Object Fit', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'contain',
+				'options' => [
+					'fill' => __( 'Fill', 'ele_pack' ),
+					'cover' => __( 'Cover', 'ele_pack' ),
+					'contain' => __( 'Contain', 'ele_pack' ),
+				],
+                'selectors' => [
+					'{{WRAPPER}} .avatar-image' => 'object-fit: {{VALUE}};',
+				],
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'ele_pack_card_image_box_shadow',
+				'label' => __( 'Box Shadow', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .avatar-image',
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_image_border_radius',
+			[
+				'label' => __( 'Border Radius', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .avatar-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_image_top_gap',
+			[
+				'label' => __( 'Top Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .avatar-image' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_image_bottom_gap',
+			[
+				'label' => __( 'Bottom Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .avatar-image' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->end_controls_section();
+        $this->start_controls_section(
+			'ele_pack_card_icon_style',
+			[
+				'label' => __( 'Card Top Icon', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'icon',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_size',
+			[
+				'label' => __( 'Icon', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ele_pack_icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_color',
+			[
+				'label' => __( 'Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ele_pack_icon' => 'color: {{VALUE}} !important',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_background_color',
+			[
+				'label' => __( 'Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ele_pack_icon' => 'background-color: {{VALUE}} !important',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_divider_one',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'ele_pack_card_icon_border',
+				'label' => __( 'Border', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .ele_pack_icon',
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_border_radius',
+			[
+				'label' => __( 'Border Radius', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .ele_pack_icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_padding',
+			[
+				'label' => __( 'Padding', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .ele_pack_icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_divider_two',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_top_gap',
+			[
+				'label' => __( 'Top Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-icon' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_bottom_gap',
+			[
+				'label' => __( 'Bottom Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-icon' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+        $this->end_controls_section();
+        $this->start_controls_section(
+			'ele_pack_card_content_style',
+			[
+				'label' => __( 'Card Content', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'ele_pack_card_content_title_typography',
+				'label' => __( 'Typography', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card-heading',
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_content_title_color',
+			[
+				'label' => __( 'Title Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card-heading' => 'color: {{VALUE}}',
+				],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_content_one',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'ele_pack_card_content_des_typography',
+				'label' => __( 'Title Typography', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card-text',
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_content_des_color',
+			[
+				'label' => __( 'Description Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card-text' => 'color: {{VALUE}}',
+				],
+			]
+		);
+        $this->end_controls_section();
     }
 
 	protected function render() {
         $settings = $this->get_settings_for_display();
-		echo '<h2 class="ele-heading">' . $settings['widget_title'] . '</h2>';
+        $card_top = $this->card_top();
+        $card_button = $this->card_button();
+        $card_title = $settings['ele_pack_card_title'];
+        $card_des = $settings['ele_pack_card_description'];
+		?>
+        <div class="card">
+        <?php echo $card_top; ?>
+                <div class="card-body">         
+                    <div class="card-content">
+                        <h1 class="card-heading"><?php echo $card_title; ?></h1>
+                        <p class="card-text"><?php echo $card_des; ?></p>
+                        <?php echo $card_button ?>
+                    </div>
+                </div>
+            </div>
+        <?php
     }
+    protected function card_top(){
+        
+        $settings = $this->get_settings_for_display();
+        $card_image_icon_enable = $settings['ele_pack_image_icon_enable'];
+        $card_icon = $settings['ele_pack_top_icon'];
+        $card_image = $settings['ele_pack_top_image'];
+        $card_top_enable = $settings['ele_pack_top_enable'];
+        
+        if($card_image_icon_enable == 'icon'){
+            $card_top_content = '<div class="card-icon ">
+                                    <i class="'.$card_icon["value"].' ele_pack_icon"></i>
+                                </div>';
+        }else{
+            $card_top_content = '<div class="card-img">  
+                                    <img class="avatar-image" src="'.$card_image["url"].'" alt="">
+                                </div>';
+        }
 
+        if($card_top_enable == 'top_enable'){
+            $card_top = '<div class="card-top-content">'.$card_top_content.'</div>';
+        }
+        
+        return $card_top;
+    
+    } 
+    protected function card_button() {
+        $settings = $this->get_settings_for_display();
+        $enable_card_button = $settings['ele_pack_enable_card_button'];
+        $button_text = $settings['ele_pack_card_button_title'];
+        $button_style = $settings['ele_pack_card_button_style'];
+        $button_link = $settings['ele_pack_card_button_link'];
+        if($enable_card_button == 'enable_button'){
+            $card_button = '<div class="button">
+                                <a href="'.$button_link['url'].'" class="'.$button_style.'">'.$button_text.'</a>
+                            </div>';
+        }
+        return $card_button;
+    }
 	protected function _content_template() {}
 }
+
+
+

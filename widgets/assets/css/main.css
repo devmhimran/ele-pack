@@ -1,3 +1,58 @@
-.ele-heading{
-    color: blue;
+.card{
+    overflow: hidden;
+}
+/* .card:hover {
+    background-color: #017eff;
+    color: aliceblue;
+} */
+.card-body{
+    padding: 20px;
+}
+.card-icon {
+    text-align: center;
+}
+.ele_pack_icon{
+    font-size: 40px;
+    padding: 20px;
+    background-color: #017eff;
+    color: #fff;
+}
+.card-img{
+    text-align: center;
+    box-sizing: border-box;
+}
+.avatar-image{
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+   
+}
+.card-heading{
+    text-align: center;
+    padding: 5px 0;
+}
+.card:hover .card-heading{
+    color: #fff;
+}
+.card-text{
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+}
+.card:hover .card-text{
+    color: #fff;
+}
+.button{
+    text-align: center;
+    margin-top: 30px;
+}
+.card-btn{
+    padding: 12px 30px;
+    background-color: #017eff;
+    color: #fff!important;
+    border-radius: 3px;
+}
+.card-text-btn{
+    color: #017eff;
+    font-weight: 500;
 }

@@ -7,11 +7,11 @@ Version: 1.0.1
 Author: NH Imran
 Author URI: https://hasin.me
 License: GPLv2 or later
-Text Domain: ebe
+Text Domain: ele_pack
 Domain Path: /languages/
 */
 
-final class Elementor_Blank_Extension {
+final class Ele_Pack {
 
 	/**
 	 * Plugin Version
@@ -100,7 +100,7 @@ final class Elementor_Blank_Extension {
 	 */
 	public function i18n() {
 
-		load_plugin_textdomain( 'ebe' );
+		load_plugin_textdomain( 'ele_pack' );
 
 	}
 
@@ -138,6 +138,7 @@ final class Elementor_Blank_Extension {
 		}
 
 		// Add Plugin actions
+		add_action( 'elementor/elements/categories_registered', [ $this, 'ele_pack_widget_category' ] );
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
 		add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'init_widgets_scripts' ] );
 		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'init_widgets_styles' ] );
@@ -158,9 +159,9 @@ final class Elementor_Blank_Extension {
 
 		$message = sprintf(
 		/* translators: 1: Plugin name 2: Elementor */
-			esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'ebe' ),
-			'<strong>' . esc_html__( 'Elementor Blank Extension', 'ebe' ) . '</strong>',
-			'<strong>' . esc_html__( 'Elementor', 'ebe' ) . '</strong>'
+			esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'ele_pack' ),
+			'<strong>' . esc_html__( 'Elementor Blank Extension', 'ele_pack' ) . '</strong>',
+			'<strong>' . esc_html__( 'Elementor', 'ele_pack' ) . '</strong>'
 		);
 
 		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
@@ -182,9 +183,9 @@ final class Elementor_Blank_Extension {
 
 		$message = sprintf(
 		/* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
-			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'ebe' ),
-			'<strong>' . esc_html__( 'Elementor Blank Extension', 'ebe' ) . '</strong>',
-			'<strong>' . esc_html__( 'Elementor', 'ebe' ) . '</strong>',
+			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'ele_pack' ),
+			'<strong>' . esc_html__( 'Elementor Blank Extension', 'ele_pack' ) . '</strong>',
+			'<strong>' . esc_html__( 'Elementor', 'ele_pack' ) . '</strong>',
 			self::MINIMUM_ELEMENTOR_VERSION
 		);
 
@@ -207,15 +208,27 @@ final class Elementor_Blank_Extension {
 
 		$message = sprintf(
 		/* translators: 1: Plugin name 2: PHP 3: Required PHP version */
-			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'ebe' ),
-			'<strong>' . esc_html__( 'Elementor Blank Extension', 'ebe' ) . '</strong>',
-			'<strong>' . esc_html__( 'PHP', 'ebe' ) . '</strong>',
+			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'ele_pack' ),
+			'<strong>' . esc_html__( 'Elementor Blank Extension', 'ele_pack' ) . '</strong>',
+			'<strong>' . esc_html__( 'PHP', 'ele_pack' ) . '</strong>',
 			self::MINIMUM_PHP_VERSION
 		);
 
 		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
 
 	}
+
+	public function ele_pack_widget_category($elements_manager) {
+		$elements_manager->add_category(
+			'ele_pack_category',
+			[
+				'title' => __( 'Ele Pack', 'ele_pack' ),
+				'icon' => 'fa fa-plug',
+			]
+		);
+	
+	}
+
 
 	/**
 	 * Init Widgets
@@ -240,8 +253,9 @@ final class Elementor_Blank_Extension {
 	}
 	public function init_widgets_styles() {
 		wp_register_style( 'main_css', plugins_url( '/widgets/assets/css/main.css', __FILE__ ));
+		wp_register_style( 'bootstrap_css', plugins_url( '/lib/css/bootstrap.min.css', __FILE__ ));
 	}
 
 }
 
-Elementor_Blank_Extension::instance();
+Ele_Pack::instance();
