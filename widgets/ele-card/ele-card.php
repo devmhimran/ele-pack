@@ -11,7 +11,7 @@ class Ele_Card extends \Elementor\Widget_Base{
     }
 
 	public function get_icon() {
-        return 'fa fa-code';
+        return 'fas fa-minus-square';
     }
 
 	public function get_categories() {
@@ -338,6 +338,14 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
+		$this->add_control(
+			'ele_pack_card_style_heading',
+			[
+				'label' => __( 'Card Hover', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
         $this->start_controls_tabs(
 			'card_style_tabs'
 		);
@@ -485,6 +493,16 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .card:hover .card-text' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_text_btn_hover',
+			[
+				'label' => __( 'Text Button Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .card-text-btn' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -993,7 +1011,7 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'label' => __( 'Hover Color', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .card-text-btn:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .card-text-btn:hover' => 'color: {{VALUE}}!important',
 				],
 			]
 		);

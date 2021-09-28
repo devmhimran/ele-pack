@@ -1,22 +1,18 @@
 <?php
-/*
-Plugin Name: Ele Pack Addons
-Plugin URI:
-Description: Boilerplate for creating Elementor Extensions
-Version: 1.0.8
-Author: MH Imran
-Author URI: https://hasin.me
-License: GPLv2 or later
-Text Domain: ele_pack
-Domain Path: /languages/
-*/
+/**
+ * Plugin Name: Ele Pack Addons
+ * Plugin URI: http://example.com
+ * Description: Ele Pack is a Elementor Addon. Easily Customizable
+ * Version: 1.0.0
+ * Author: Mh Imran
+ * Author URI: 
+ * Text Domain: ele_pack
+ * Domain Path: /languages/
+ * License: GPL3
+ * Elementor requires at least: 3.0.0
+ * Elementor tested up to: 3.4.4
+ */
 
-require dirname(__FILE__) . '/lib/plugin-update-checker/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/imran150/ele-pack',
-	__FILE__, //Full path to the main plugin file or functions.php.
-	'ele_pack'
-);
 final class Ele_Pack {
 
 	/**
@@ -263,5 +259,12 @@ final class Ele_Pack {
 	}
 
 }
+
+require dirname(__FILE__) . '/lib/plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/imran150/ele-pack',
+	__FILE__, //Full path to the main plugin file or functions.php.
+	'ele_pack'
+);
 
 Ele_Pack::instance();
