@@ -11,7 +11,7 @@ Text Domain: ele_pack
 Domain Path: /languages/
 */
 
-require dirname(__FILE__) . '/lib/plugin-update-checker/load-v4p11.php';
+require dirname(__FILE__) . '/lib/plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/imran150/ele-pack',
 	__FILE__, //Full path to the main plugin file or functions.php.
