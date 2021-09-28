@@ -3,7 +3,7 @@
 Plugin Name: Ele Pack Addons
 Plugin URI:
 Description: Boilerplate for creating Elementor Extensions
-Version: 1.0.4
+Version: 1.0.7
 Author: MH Imran
 Author URI: https://hasin.me
 License: GPLv2 or later
