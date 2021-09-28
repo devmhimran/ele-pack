@@ -31,7 +31,7 @@ class Ele_Card extends \Elementor\Widget_Base{
         $this->start_controls_section(
 			'ele_pack_card_top_section',
 			[
-				'label' => __( 'Card Top', 'ele_pack' ),
+				'label' => __( 'Card Header', 'ele_pack' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -182,6 +182,7 @@ class Ele_Card extends \Elementor\Widget_Base{
 			[
 				'label' => __( 'Title', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
 				'default' => __( 'Default title', 'ele_pack' ),
 				'placeholder' => __( 'Type your title here', 'ele_pack' ),
                 'dynamic' => [
@@ -286,7 +287,7 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'default' => 'center',
 				'toggle' => true,
                 'selectors' => [
-                    '{{WRAPPER}} .button' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .button-text,.button-main' => 'text-align: {{VALUE}};',
                 ],
                 'conditions' => [
                     'relation' => 'and',
@@ -346,14 +347,23 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'label' => __( 'Normal', 'ele_pack' ),
 			]
 		);
-        $this->add_control(
-			'ele_pack_card_background_color_normal',
+        // $this->add_control(
+		// 	'ele_pack_card_background_color_normal',
+		// 	[
+		// 		'label' => __( 'Background Color', 'ele_pack' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .card' => 'background-color: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
 			[
-				'label' => __( 'Background Color', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .card' => 'background-color: {{VALUE}}',
-				],
+				'name' => 'ele_pack_card_background_color_normal',
+				'label' => __( 'Background', 'plugin-domain' ),
+				'types' => [ 'classic', 'gradient', 'video' ],
+				'selector' => '{{WRAPPER}} .card',
 			]
 		);
         $this->add_group_control(
@@ -369,6 +379,93 @@ class Ele_Card extends \Elementor\Widget_Base{
 			'card_style_tab_hover',
 			[
 				'label' => __( 'Hover', 'ele_pack' ),
+			]
+		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'ele_pack_card_background_color_hover',
+				'label' => __( 'Background', 'plugin-domain' ),
+				'types' => [ 'classic', 'gradient', 'video' ],
+				'selector' => '{{WRAPPER}} .card:hover',
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_icon_hover',
+			[
+				'label' => __( 'Icon Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'color: {{VALUE}}!important',
+				],
+				'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'icon',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_background_hover',
+			[
+				'label' => __( 'Icon Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'background-color: {{VALUE}}!important',
+				],
+				'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'icon',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+        $this->add_control(
+			'ele_pack_card_icon_border_hover',
+			[
+				'label' => __( 'Icon Border Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'border-color: {{VALUE}}',
+				],
+				'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_top_enable',
+                            'operator' => '==',
+                            'value' => 'top_enable',
+                        ],
+                        [
+                            'name' => 'ele_pack_image_icon_enable',
+                            'operator' => '==',
+                            'value' => 'icon',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
 			]
 		);
         $this->add_control(
@@ -391,46 +488,24 @@ class Ele_Card extends \Elementor\Widget_Base{
 				],
 			]
 		);
-        $this->add_control(
-			'ele_pack_card_icon_hover',
-			[
-				'label' => __( 'Icon Color', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'color: {{VALUE}}',
-				],
-			]
-		);
-        $this->add_control(
-			'ele_pack_card_icon_background_hover',
-			[
-				'label' => __( 'Icon Background Color', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-        $this->add_control(
-			'ele_pack_card_icon_border_hover',
-			[
-				'label' => __( 'Icon Border Color', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .card:hover .ele_pack_icon' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-        $this->add_control(
-			'ele_pack_card_background_color_hover',
-			[
-				'label' => __( 'Background Color', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .card:hover' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
+        // $this->add_control(
+		// 	'ele_pack_card_background_color_hover',
+		// 	[
+		// 		'label' => __( 'Background Color', 'ele_pack' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .card:hover' => 'background-color: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'ele_pack_card_hr_one',
+		// 	[
+		// 		'type' => \Elementor\Controls_Manager::DIVIDER,
+		// 	]
+		// );
+
         $this->add_group_control(
 			\Elementor\Group_Control_Box_Shadow::get_type(),
 			[
@@ -442,7 +517,7 @@ class Ele_Card extends \Elementor\Widget_Base{
         $this->end_controls_tab();
         $this->end_controls_tabs();
         $this->add_control(
-			'ele_pack_card_hr_one',
+			'ele_pack_card_hr_two',
 			[
 				'type' => \Elementor\Controls_Manager::DIVIDER,
 			]
@@ -481,7 +556,7 @@ class Ele_Card extends \Elementor\Widget_Base{
         $this->start_controls_section(
 			'ele_pack_card_top_image_style',
 			[
-				'label' => __( 'Card Top Image', 'ele_pack' ),
+				'label' => __( 'Card Header', 'ele_pack' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 'conditions' => [
                     'relation' => 'and',
@@ -598,29 +673,11 @@ class Ele_Card extends \Elementor\Widget_Base{
 				],
 			]
 		);
-        $this->add_control(
-			'ele_pack_card_image_bottom_gap',
-			[
-				'label' => __( 'Bottom Gap', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .avatar-image' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
         $this->end_controls_section();
         $this->start_controls_section(
 			'ele_pack_card_icon_style',
 			[
-				'label' => __( 'Card Top Icon', 'ele_pack' ),
+				'label' => __( 'Card Header', 'ele_pack' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 'conditions' => [
                     'relation' => 'and',
@@ -664,7 +721,7 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'label' => __( 'Color', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .ele_pack_icon' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} .ele_pack_icon' => 'color: {{VALUE}} ',
 				],
 			]
 		);
@@ -738,22 +795,12 @@ class Ele_Card extends \Elementor\Widget_Base{
 				],
 			]
 		);
-        $this->add_control(
-			'ele_pack_card_icon_bottom_gap',
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
 			[
-				'label' => __( 'Bottom Gap', 'ele_pack' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .card-icon' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
+				'name' => 'ele_pack_card_icon_box_shadow',
+				'label' => __( 'Box Shadow', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .ele_pack_icon',
 			]
 		);
         $this->end_controls_section();
@@ -782,6 +829,50 @@ class Ele_Card extends \Elementor\Widget_Base{
 				],
 			]
 		);
+		$this->add_control(
+			'ele_pack_card_content_title_align',
+			[
+				'label' => __( 'Alignment', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __( 'Left', 'ele_pack' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'ele_pack' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __( 'Right', 'ele_pack' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],     
+				'default' => 'center',
+				'toggle' => true,
+                'selectors' => [
+                    '{{WRAPPER}} .card-heading' => 'text-align: {{VALUE}};',
+                ],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_content_title_gap',
+			[
+				'label' => __( 'Top Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-heading' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
         $this->add_control(
 			'ele_pack_card_content_one',
 			[
@@ -806,7 +897,274 @@ class Ele_Card extends \Elementor\Widget_Base{
 				],
 			]
 		);
+		$this->add_control(
+			'ele_pack_card_content_des_align',
+			[
+				'label' => __( 'Alignment', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __( 'Left', 'ele_pack' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'ele_pack' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __( 'Right', 'ele_pack' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => __( 'Right', 'ele_pack' ),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],     
+				'default' => 'center',
+				'toggle' => true,
+                'selectors' => [
+                    '{{WRAPPER}} .card-text' => 'text-align: {{VALUE}};',
+                ],		
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_content_des_gap',
+			[
+				'label' => __( 'Top Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-text' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
         $this->end_controls_section();
+		$this->start_controls_section(
+			'ele_pack_card_text_button_style_section',
+			[
+				'label' => __( 'Text Button Style', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+						[
+                            'name' => 'ele_pack_card_button_style',
+                            'operator' => '==',
+                            'value' => 'card-text-btn',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'ele_pack_card_text_button_typography',
+				'label' => __( 'Typography', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card-text-btn',
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_text_button_color',
+			[
+				'label' => __( 'Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card-text-btn' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_text_button_color_hover',
+			[
+				'label' => __( 'Hover Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .card-text-btn:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_text_button_gap',
+			[
+				'label' => __( 'Top Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .button-text' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'ele_pack_card_button_style_section',
+			[
+				'label' => __( 'Button Style', 'ele_pack' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+						[
+                            'name' => 'ele_pack_card_button_style',
+                            'operator' => '==',
+                            'value' => 'card-btn',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
+			]
+		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'ele_pack_card_button_typography',
+				'label' => __( 'Typography', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .button-main',
+			]
+		);
+		$this->start_controls_tabs(
+			'ele_pack_card_button_style_tabs'
+		);
+		$this->start_controls_tab(
+			'ele_pack_card_button_normal_tab',
+			[
+				'label' => __( 'Normal', 'ele_pack' ),
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_color',
+			[
+				'label' => __( 'Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Scheme_Color::get_type(),
+					'value' => \Elementor\Scheme_Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-btn' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_background_color',
+			[
+				'label' => __( 'Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Scheme_Color::get_type(),
+					'value' => \Elementor\Scheme_Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-btn' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		$this->end_controls_tab();
+		$this->start_controls_tab(
+			'ele_pack_card_button_hover_tab',
+			[
+				'label' => __( 'Hover', 'ele_pack' ),
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_hover_color',
+			[
+				'label' => __( 'Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Scheme_Color::get_type(),
+					'value' => \Elementor\Scheme_Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-btn:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_background_hover_color',
+			[
+				'label' => __( 'Background Color', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Scheme_Color::get_type(),
+					'value' => \Elementor\Scheme_Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .card-btn:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		$this->end_controls_tab();
+		$this->end_controls_tabs();
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'ele_pack_card_button_border',
+				'label' => __( 'Border', 'ele_pack' ),
+				'selector' => '{{WRAPPER}} .card-btn',
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_divider_one',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_padding',
+			[
+				'label' => __( 'Padding', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .card-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+		$this->add_control(
+			'ele_pack_card_button_gap',
+			[
+				'label' => __( 'Top Gap', 'ele_pack' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .button-main' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+		$this->end_controls_section();
     }
 
 	protected function render() {
@@ -837,7 +1195,7 @@ class Ele_Card extends \Elementor\Widget_Base{
         $card_top_enable = $settings['ele_pack_top_enable'];
         
         if($card_image_icon_enable == 'icon'){
-            $card_top_content = '<div class="card-icon ">
+            $card_top_content = '<div class="card-icon">
                                     <i class="'.$card_icon["value"].' ele_pack_icon"></i>
                                 </div>';
         }else{
@@ -859,12 +1217,19 @@ class Ele_Card extends \Elementor\Widget_Base{
         $button_text = $settings['ele_pack_card_button_title'];
         $button_style = $settings['ele_pack_card_button_style'];
         $button_link = $settings['ele_pack_card_button_link'];
-        if($enable_card_button == 'enable_button'){
-            $card_button = '<div class="button">
-                                <a href="'.$button_link['url'].'" class="'.$button_style.'">'.$button_text.'</a>
-                            </div>';
-        }
-        return $card_button;
+        if($button_style == 'card-text-btn'){
+            $card_button = '<div class="button-text">
+								<a href="'.$button_link['url'].'" class="'.$button_style.'">'.$button_text.'</a>
+							</div>';
+        }else{
+			$card_button = '<div class="button-main">
+								<a href="'.$button_link['url'].'" class="'.$button_style.'">'.$button_text.'</a>
+							</div>';
+		}
+		if($enable_card_button == 'enable_button'){
+			$card_button_main = '<div class="button">'.$card_button.'</div>';
+		}
+        return $card_button; 
     }
 	protected function _content_template() {}
 }

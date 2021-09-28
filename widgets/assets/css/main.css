@@ -1,21 +1,22 @@
 .card{
     overflow: hidden;
 }
-/* .card:hover {
+.card:hover {
     background-color: #017eff;
-    color: aliceblue;
-} */
+}
 .card-body{
     padding: 20px;
 }
 .card-icon {
     text-align: center;
 }
+.card:hover .card-icon{
+    /* color: #017eff; */
+}
 .ele_pack_icon{
     font-size: 40px;
     padding: 20px;
-    background-color: #017eff;
-    color: #fff;
+    /* background-color: #017eff; */
 }
 .card-img{
     text-align: center;
@@ -44,12 +45,11 @@
 }
 .button{
     text-align: center;
-    margin-top: 30px;
 }
 .card-btn{
     padding: 12px 30px;
     background-color: #017eff;
-    color: #fff!important;
+    color: #fff;
     border-radius: 3px;
 }
 .card-text-btn{
