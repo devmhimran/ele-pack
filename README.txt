@@ -1,6 +1,6 @@
 === Ele Pack Addons ===
 Contributors: 
-Donate link: https://example.com/
+Donate link: https://syntaxpyramid.ezyro.com/
 Tags: elementor, ele pack addons, card widget, drag-and-drop
 Requires at least: 3.0.0
 Tested up to: 5.4

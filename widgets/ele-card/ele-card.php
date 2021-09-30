@@ -225,7 +225,7 @@ class Ele_Card extends \Elementor\Widget_Base{
         $this->add_control(
 			'ele_pack_card_button_style',
 			[
-				'label' => __( 'Border Style', 'ele_pack' ),
+				'label' => __( 'Button Style', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'card-text-btn',
 				'options' => [
@@ -504,6 +504,22 @@ class Ele_Card extends \Elementor\Widget_Base{
 				'selectors' => [
 					'{{WRAPPER}} .card:hover .card-text-btn' => 'color: {{VALUE}}',
 				],
+				'conditions' => [
+                    'relation' => 'and',
+                    'terms' => [
+                        [
+                            'name' => 'ele_pack_enable_card_button',
+                            'operator' => '==',
+                            'value' => 'enable_button',
+                        ],
+						[
+                            'name' => 'ele_pack_card_button_style',
+                            'operator' => '==',
+                            'value' => 'card-text-btn',
+                        ],
+                    ],
+				'toggle' => true,
+                ],
 			]
 		);
         // $this->add_control(
@@ -1079,10 +1095,6 @@ class Ele_Card extends \Elementor\Widget_Base{
 			[
 				'label' => __( 'Color', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Scheme_Color::get_type(),
-					'value' => \Elementor\Scheme_Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .card-btn' => 'color: {{VALUE}}',
 				],
@@ -1093,10 +1105,6 @@ class Ele_Card extends \Elementor\Widget_Base{
 			[
 				'label' => __( 'Background Color', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Scheme_Color::get_type(),
-					'value' => \Elementor\Scheme_Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .card-btn' => 'background-color: {{VALUE}}',
 				],
@@ -1114,10 +1122,6 @@ class Ele_Card extends \Elementor\Widget_Base{
 			[
 				'label' => __( 'Color', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Scheme_Color::get_type(),
-					'value' => \Elementor\Scheme_Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .card-btn:hover' => 'color: {{VALUE}}',
 				],
@@ -1128,10 +1132,6 @@ class Ele_Card extends \Elementor\Widget_Base{
 			[
 				'label' => __( 'Background Color', 'ele_pack' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Scheme_Color::get_type(),
-					'value' => \Elementor\Scheme_Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .card-btn:hover' => 'background-color: {{VALUE}}',
 				],

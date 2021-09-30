@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Ele Pack Addons
- * Plugin URI: http://example.com
+ * Plugin URI: https://syntaxpyramid.ezyro.com/
  * Description: Ele Pack is a Elementor Addon. Easily Customizable
  * Version: 1.0.0
  * Author: Mh Imran
