@@ -7,7 +7,7 @@
  * Author URI: https://mhimran.netlify.app/
  * Text Domain: ele_pack
  * Domain Path: /languages/
- * License: GPL3
+ * License: GPLv2 or later
  * Elementor requires at least: 3.0.0
  * Elementor tested up to: 3.4.4
  */
