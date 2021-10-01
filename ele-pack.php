@@ -1,11 +1,10 @@
 <?php
 /**
  * Plugin Name: Ele Pack Addons
- * Plugin URI: https://syntaxpyramid.ezyro.com/
  * Description: Ele Pack is a Elementor Addon. Easily Customizable
  * Version: 1.0.0
  * Author: Mh Imran
- * Author URI: 
+ * Author URI: https://mhimran.netlify.app/
  * Text Domain: ele_pack
  * Domain Path: /languages/
  * License: GPL3
