@@ -1,8 +1,9 @@
 <?php
 /**
  * Plugin Name: Ele Pack Addons
+ * https://github.com/imran150/ele-pack
  * Description: Ele Pack is a Elementor Addon. Easily Customizable
- * Version: 1.0.0
+ * Version: 1.0
  * Author: Mh Imran
  * Author URI: https://mhimran.netlify.app/
  * Text Domain: ele_pack
@@ -17,7 +18,7 @@ final class Ele_Pack {
 	/**
 	 * Plugin Version
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @var string The plugin version.
 	 */
@@ -26,7 +27,7 @@ final class Ele_Pack {
 	/**
 	 * Minimum Elementor Version
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @var string Minimum Elementor version required to run the plugin.
 	 */
@@ -35,7 +36,7 @@ final class Ele_Pack {
 	/**
 	 * Minimum PHP Version
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @var string Minimum PHP version required to run the plugin.
 	 */
@@ -44,7 +45,7 @@ final class Ele_Pack {
 	/**
 	 * Instance
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access private
 	 * @static
@@ -58,7 +59,7 @@ final class Ele_Pack {
 	 *
 	 * Ensures only one instance of the class is loaded or can be loaded.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 * @static
@@ -77,7 +78,7 @@ final class Ele_Pack {
 	/**
 	 * Constructor
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -95,7 +96,7 @@ final class Ele_Pack {
 	 *
 	 * Fired by `init` action hook.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -114,7 +115,7 @@ final class Ele_Pack {
 	 *
 	 * Fired by `plugins_loaded` action hook.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -150,7 +151,7 @@ final class Ele_Pack {
 	 *
 	 * Warning when the site doesn't have Elementor installed or activated.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -174,7 +175,7 @@ final class Ele_Pack {
 	 *
 	 * Warning when the site doesn't have a minimum required Elementor version.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -199,7 +200,7 @@ final class Ele_Pack {
 	 *
 	 * Warning when the site doesn't have a minimum required PHP version.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -236,7 +237,7 @@ final class Ele_Pack {
 	 *
 	 * Include widgets files and register them
 	 *
-	 * @since 1.0.0
+	 * @since 1.0
 	 *
 	 * @access public
 	 */
@@ -259,11 +260,5 @@ final class Ele_Pack {
 
 }
 
-require dirname(__FILE__) . '/lib/plugin-update-checker/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/imran150/ele-pack',
-	__FILE__, //Full path to the main plugin file or functions.php.
-	'ele_pack'
-);
 
 Ele_Pack::instance();

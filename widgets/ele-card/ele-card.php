@@ -1191,18 +1191,18 @@ class Ele_Card extends \Elementor\Widget_Base{
         $card_button = $this->card_button();
         $card_title = $settings['ele_pack_card_title'];
         $card_des = $settings['ele_pack_card_description'];
-		?>
-        <div class="card">
-        <?php echo $card_top; ?>
-                <div class="card-body">         
-                    <div class="card-content">
-                        <h1 class="card-heading"><?php echo $card_title; ?></h1>
-                        <p class="card-text"><?php echo $card_des; ?></p>
-                        <?php echo $card_button ?>
-                    </div>
-                </div>
-            </div>
-        <?php
+		
+        echo '<div class="card">';
+        echo $card_top;
+        echo '<div class="card-body">' ;        
+        echo '<div class="card-content">';
+        echo '<h1 class="card-heading">'.$card_title.'</h1>';
+        echo '<p class="card-text">'.$card_des.'</p>';
+        echo  $card_button;
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        
     }
     protected function card_top(){
         

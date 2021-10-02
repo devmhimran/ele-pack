@@ -3,8 +3,8 @@ Contributors:
 Donate link: https://mhimran.netlify.app/
 Tags: elementor, ele pack addons, card widget, drag-and-drop
 Requires at least: 3.0.0
-Tested up to: 5.4
-Stable tag: 1.0.1
+Tested up to: 5.8
+Stable tag: 1.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
