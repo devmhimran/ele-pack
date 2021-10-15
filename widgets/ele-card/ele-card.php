@@ -1,6 +1,5 @@
 <?php
 
-
 class Ele_Card extends \Elementor\Widget_Base{
     public function get_name() {
         return 'ele-card';
@@ -1187,69 +1186,53 @@ class Ele_Card extends \Elementor\Widget_Base{
 
 	protected function render() {
         $settings = $this->get_settings_for_display();
-        $card_top = $this->card_top();
-        $card_button = $this->card_button();
         $card_title = $settings['ele_pack_card_title'];
         $card_des = $settings['ele_pack_card_description'];
-
-		?>
-		<div class="card">
-        <?php echo $this->card_top(); ?>
-                <div class="card-body">         
-                    <div class="card-content">
-                        <h1 class="card-heading"><?php echo $settings['ele_pack_card_title'] ?></h1>
-                        <p class="card-text"><?php echo $settings['ele_pack_card_description']; ?></p>
-                        <?php echo $this->card_button(); ?>
-                    </div>
-                </div>
-            </div>
-		<?php
-
-    }
-    protected function card_top(){
-        
-        $settings = $this->get_settings_for_display();
-        $card_image_icon_enable = $settings['ele_pack_image_icon_enable'];
+		$card_image_icon_enable = $settings['ele_pack_image_icon_enable'];
         $card_icon = $settings['ele_pack_top_icon'];
         $card_image = $settings['ele_pack_top_image'];
         $card_top_enable = $settings['ele_pack_top_enable'];
-        
-        if($card_image_icon_enable == 'icon'){
-            $card_top_content = '<div class="card-icon">
-                                    <i class="'.$card_icon["value"].' ele_pack_icon"></i>
-                                </div>';
-        }else{
-            $card_top_content = '<div class="card-img">  
-                                    <img class="avatar-image" src="'.$card_image["url"].'" alt="">
-                                </div>';
-        }
-
-        if($card_top_enable == 'top_enable'){
-            $card_top = '<div class="card-top-content">'.$card_top_content.'</div>';
-        }
-        
-        return $card_top;
-    
-    } 
-    protected function card_button() {
-        $settings = $this->get_settings_for_display();
         $enable_card_button = $settings['ele_pack_enable_card_button'];
         $button_text = $settings['ele_pack_card_button_title'];
         $button_style = $settings['ele_pack_card_button_style'];
         $button_link = $settings['ele_pack_card_button_link'];
-        if($button_style == 'card-text-btn'){
-            $card_button = '<div class="button-text">
-								<a href="'.$button_link['url'].'" class="'.$button_style.'">'.$button_text.'</a>
-							</div>';
-        }else{
-			$card_button = '<div class="button-main">
-								<a href="'.$button_link['url'].'" class="'.$button_style.'">'.$button_text.'</a>
-							</div>';
-		}
-		if($enable_card_button == 'enable_button'){
-			$card_button_main = '<div class="button">'.$card_button.'</div>';
-		}
-        return $card_button; 
+    
+
+		?>
+        <div class="card">
+		<?php
+		if($card_top_enable == 'top_enable'){
+		if($card_image_icon_enable == 'icon'){ ?>
+			<div class="card-icon">
+                <i class="<?php echo esc_attr($card_icon["value"]) ?> ele_pack_icon"></i>
+            </div>
+			<?php }else{ ?>
+			<div class="card-img">  
+            	<img class="avatar-image" src="<?php echo $card_image["url"] ?>" alt="">
+            </div>
+			<?php } }?>
+                <div class="card-body">         
+                    <div class="card-content">
+                        <h1 class="card-heading"><?php echo esc_attr($card_title); ?></h1>
+                        <p class="card-text"><?php echo esc_attr($card_des); ?></p>
+						<?php 
+						if($enable_card_button == 'enable_button'){
+						if($button_style == 'card-text-btn'){
+						?>
+						<div class="button-text">
+								<a href="<?php echo esc_attr($button_link['url']) ?>" class="<?php echo esc_attr($button_style) ?>"><?php echo esc_attr($button_text) ?></a>
+						</div>
+						<?php }else{ ?>
+							<div class="button-main">
+								<a href="<?php echo esc_attr($button_link['url']) ?>" class="<?php echo esc_attr($button_style) ?>"><?php echo esc_attr($button_text) ?></a>
+							</div>
+						<?php } } ?>
+                    </div>
+                </div>
+            </div>
+        <?php
+        
+
     }
 	protected function _content_template() {}
 }
