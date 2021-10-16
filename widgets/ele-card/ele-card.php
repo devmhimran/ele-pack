@@ -1208,7 +1208,7 @@ class Ele_Card extends \Elementor\Widget_Base{
             </div>
 			<?php }else{ ?>
 			<div class="card-img">  
-            	<img class="avatar-image" src="<?php echo $card_image["url"] ?>" alt="">
+            	<img class="avatar-image" src="<?php echo esc_attr($card_image["url"]) ?>" alt="">
             </div>
 			<?php } }?>
                 <div class="card-body">         

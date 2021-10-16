@@ -56,3 +56,6 @@
     color: #017eff;
     font-weight: 500;
 }
+.card-btn:hover{
+    text-decoration: none;
+}

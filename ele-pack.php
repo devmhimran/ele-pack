@@ -255,7 +255,7 @@ final class Ele_Pack {
 	}
 	public function init_widgets_styles() {
 		wp_register_style( 'main_css', plugins_url( '/widgets/assets/css/main.css', __FILE__ ));
-		wp_register_style( 'bootstrap_css', plugins_url( '/lib/css/bootstrap.min.css', __FILE__ ));
+		wp_register_style( 'bootstrap_css', plugins_url( '/lib/css/bts.min.css', __FILE__ ));
 	}
 
 }
